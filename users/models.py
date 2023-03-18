@@ -35,8 +35,9 @@ class UserManager(BaseUserManager):
 
 
 class UserProfile(AbstractUser):
-    name = models.CharField(max_length=30, unique=True)
-    lastname = models.CharField(max_length=30, unique=True)
+    username = None
+    name = models.CharField(max_length=30,)
+    lastname = models.CharField(max_length=30,)
     email = models.EmailField(max_length=255, unique=True)
     fullname = models.CharField(max_length=60, blank=True)
     created = models.DateTimeField(auto_now_add=True)
