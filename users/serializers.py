@@ -17,18 +17,10 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'name': {'required': True},
             'lastname': {'required': True},
-            'password': {'write_only': True, 'required':True}
+            'password': {'write_only': True, 'required': True}
         }
 
-    from django.contrib.auth.hashers import make_password
-
     def validate_password(self, value: str) -> str:
-        """
-        Hash value passed by user.
-
-        :param value: password of a user
-        :return: a hashed version of the password
-        """
         return make_password(value)
 
 

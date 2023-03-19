@@ -1,5 +1,5 @@
-from rest_framework import generics
-from rest_framework.permissions import AllowAny
+from rest_framework import generics, viewsets
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import UserProfile
 from .serializers import RegisterUserSerializer, LoginUserSerializer
