@@ -26,7 +26,8 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
 class LoginUserSerializer(TokenObtainPairSerializer):
 
-    @classmethod
-    def get_token(cls, user):
-        token = super(LoginUserSerializer, cls).get_token(user)
-        return token
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+        data['lifetime'] = "{} sec".format(int(refresh.access_token.lifetime.total_seconds()))
+        return data

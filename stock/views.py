@@ -3,14 +3,19 @@ import requests
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+import logging
+logger = logging.getLogger(__name__)
 
 
 @permission_classes([IsAuthenticated])
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 def get_stock_from_endpoint(request):
+    logger.info(
+        f"Requested stock information at {str(datetime.now())}:"
+        f" email_user={request.user.email}, symbol={request.GET.get('symbol', None)}"
+    )
     stock_endpoint_information = get_stock_information_from_endpoint(request)
     last_daily_information = get_stock_information_from_last_update(stock_endpoint_information)
-
     return Response(last_daily_information)
 
 
@@ -28,10 +33,7 @@ def get_stock_information_from_endpoint(request):
         "Accept-Language": "en-US,en;q=0.9",
     }
 
-    if request.method == 'GET':
-        response = requests.post(api_url, headers=headers)
-    if request.method == 'POST':
-        response = requests.post(api_url, headers=headers)
+    response = requests.post(api_url, headers=headers)
 
     return response.json()
 
