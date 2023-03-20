@@ -23,7 +23,7 @@
 - Register
 
 ```bash
-curl --location 'https://market-stock-qa.herokuapp.com/register/' \
+curl --location 'https://market-stock.herokuapp.com/register/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "stefania",
@@ -36,7 +36,7 @@ curl --location 'https://market-stock-qa.herokuapp.com/register/' \
 - Log in 
 
 ```bash
-curl --location 'http://market-stock-qa.herokuapp.com/login/' \
+curl --location 'http://market-stock.herokuapp.com/login/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "email": "sarias@gmail.com",
@@ -60,7 +60,7 @@ Add stock symbol as query param .../?symbol=META
 Use Bearer token authentication
 
 ```bash
-curl --location 'https://market-stock-qa.herokuapp.com/stock/?symbol=META' \
+curl --location 'https://market-stock.herokuapp.com/stock/?symbol=META' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc5NDM4MTYyLCJpYXQiOjE2NzkzNTE3NjIsImp0aSI6IjBmZDVhY2ZmMDJhOTQzNjViYmMzOGUxMmQ3MmZjN2QzIiwidXNlcl9pZCI6Mn0.KCcMHvdL_YbrJR2m6AeTxAb6YyVgoGOTjDtyFD4tAQo' \
 --data ''
 ```
