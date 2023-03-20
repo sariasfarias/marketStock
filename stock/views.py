@@ -23,6 +23,9 @@ def get_stock_information_from_endpoint(request):
 
 
 def get_stock_information_from_last_update(stock_endpoint_information):
+    if not stock_endpoint_information['Meta Data']:
+        return stock_endpoint_information
+
     last_update = stock_endpoint_information['Meta Data']['3. Last Refreshed'].split()[0]
     last_daily_information = stock_endpoint_information['Time Series (Daily)'][last_update]
 
