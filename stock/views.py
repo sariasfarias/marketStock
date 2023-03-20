@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 
 @permission_classes([IsAuthenticated])
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def get_stock_information(request):
     stock_endpoint_information = get_stock_information_from_endpoint(request)
     last_daily_information = get_stock_information_from_last_update(stock_endpoint_information)
