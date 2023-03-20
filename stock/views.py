@@ -3,17 +3,11 @@ import requests
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-import logging
-logger = logging.getLogger(__name__)
 
 
 @permission_classes([IsAuthenticated])
 @api_view(['GET'])
-def get_stock_from_endpoint(request):
-    logger.info(
-        f"Requested stock information at {str(datetime.now())}:"
-        f" email_user={request.user.email}, symbol={request.GET.get('symbol', None)}"
-    )
+def get_stock_information(request):
     stock_endpoint_information = get_stock_information_from_endpoint(request)
     last_daily_information = get_stock_information_from_last_update(stock_endpoint_information)
     return Response(last_daily_information)
@@ -39,7 +33,7 @@ def get_stock_information_from_endpoint(request):
 
 
 def get_stock_information_from_last_update(stock_endpoint_information):
-    last_update = stock_endpoint_information['Meta Data']['3. Last Refreshed']
+    last_update = stock_endpoint_information['Meta Data']['3. Last Refreshed'].split()[0]
     last_daily_information = stock_endpoint_information['Time Series (Daily)'][last_update]
 
     return {
@@ -52,7 +46,8 @@ def get_stock_information_from_last_update(stock_endpoint_information):
 
 def stock_price_variation(last_update, daily_stock_information):
     day = datetime.strptime(last_update, '%Y-%m-%d').date()
-    day_before = (day - timedelta(days = 1)).strftime('%Y-%m-%d')
+    timedelta_days = 3 if day.weekday() == 0 else 1
+    day_before = (day - timedelta(days=timedelta_days)).strftime('%Y-%m-%d')
 
     closing_day = float(daily_stock_information[last_update]['4. close'])
     closing_day_before = float(daily_stock_information[day_before]['4. close'])

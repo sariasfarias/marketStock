@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock
 from requests.exceptions import RequestException
 from rest_framework.test import APIRequestFactory
 
-from stock.views import get_stock_from_endpoint, get_stock_information_from_last_update, stock_price_variation
+from stock.views import get_stock_information, get_stock_information_from_last_update, stock_price_variation
 
 
 @pytest.fixture
@@ -27,7 +27,7 @@ def mock_response():
 
 def test_get_stock_information_from_endpoint_success(mock_response):
     with patch('requests.post', return_value=mock_response):
-        response = get_stock_from_endpoint(APIRequestFactory().get('/'))
+        response = get_stock_information(APIRequestFactory().get('/'))
         assert response.status_code == 200
         assert response.data['open_price'] == '17.3000'
         assert response.data['higher_price'] == '17.3500'
@@ -38,7 +38,7 @@ def test_get_stock_information_from_endpoint_success(mock_response):
 def test_get_stock_information_from_endpoint_error():
     with patch('requests.post', side_effect=RequestException):
         with pytest.raises(RequestException):
-            get_stock_from_endpoint(APIRequestFactory().get('/'))
+            get_stock_information(APIRequestFactory().get('/'))
 
 
 def test_stock_price_variation():

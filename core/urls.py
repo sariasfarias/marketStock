@@ -16,8 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
-from stock.views import get_stock_from_endpoint
+from stock.views import get_stock_information
 from users.views import RegisterUserView, LoginUserView
 
 
@@ -28,5 +27,5 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register/', RegisterUserView.as_view(), name='register'),
     path('login/', LoginUserView.as_view(), name='login'),
-    path('stock/', get_stock_from_endpoint, name='stock')
+    path('stock/', get_stock_information, name='stock')
 ]
