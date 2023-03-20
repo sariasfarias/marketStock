@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 
 @permission_classes([IsAuthenticated])
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 def get_stock_information(request):
     stock_endpoint_information = get_stock_information_from_endpoint(request)
     last_daily_information = get_stock_information_from_last_update(stock_endpoint_information)
@@ -17,7 +17,7 @@ def get_stock_information_from_endpoint(request):
     api_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" \
               "{}&outputsize=compact&apikey=X86NOH6II01P7R24".format(request.GET.get('symbol', None))
 
-    response = requests.post(api_url)
+    response = requests.post(api_url,  verify=True)
 
     return response.json()
 
