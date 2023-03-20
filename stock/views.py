@@ -10,24 +10,14 @@ from rest_framework.response import Response
 def get_stock_information(request):
     stock_endpoint_information = get_stock_information_from_endpoint(request)
     last_daily_information = get_stock_information_from_last_update(stock_endpoint_information)
-    return Response(last_daily_information)
+    return Response(stock_endpoint_information)
 
 
 def get_stock_information_from_endpoint(request):
     api_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" \
               "{}&outputsize=compact&apikey=X86NOH6II01P7R24".format(request.GET.get('symbol', None))
-    headers = {
-        "Host": "www.alphavantage.co",
-        "Connection": "keep-alive",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
-                      "Chrome/62.0.3202.94 Safari/537.36",
-        "Upgrade-Insecure-Requests": "1",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "en-US,en;q=0.9",
-    }
 
-    response = requests.post(api_url, headers=headers)
+    response = requests.post(api_url)
 
     return response.json()
 
