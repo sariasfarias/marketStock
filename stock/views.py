@@ -23,7 +23,7 @@ def get_stock_information_from_endpoint(request):
 
 
 def get_stock_information_from_last_update(stock_endpoint_information):
-    if not stock_endpoint_information['Meta Data']:
+    if not stock_endpoint_information.get('Meta Data', None):
         return stock_endpoint_information
 
     last_update = stock_endpoint_information['Meta Data']['3. Last Refreshed'].split()[0]
