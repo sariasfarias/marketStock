@@ -14,7 +14,7 @@ def get_stock_information(request):
 
 
 def get_stock_information_from_endpoint(request):
-    api_url = "http://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" \
+    api_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" \
               "{}&outputsize=compact&apikey=X86NOH6II01P7R24".format(request.GET.get('symbol', None))
     headers = {
         "Host": "www.alphavantage.co",
